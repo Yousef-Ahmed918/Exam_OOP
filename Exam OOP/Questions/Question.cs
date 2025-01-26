@@ -8,10 +8,10 @@ namespace Exam_OOP.Questions
 {
     internal abstract class Question
     {
-        string Body;
-        string Header;
-        int Mark;
-        public Answers[] Answer { get; set; }
+        public string Body;
+        public string Header;
+        public int Mark;
+        public Answers[] Answer { get; set; }= new Answers[3];
         public Answers RightAnswer {  get; set; }
         //function to add the header of the question
         public virtual void HeaderOfTheQuestion()
@@ -25,14 +25,21 @@ namespace Exam_OOP.Questions
             Body = Console.ReadLine();
         }
         //function to add the mark of the question
+        //validation
         public virtual void QuestionMark() {
-            Console.WriteLine("Enter the Mark of the Question");
-            int.TryParse(Console.ReadLine(), out Mark);
+            while (true)
+            {
+                Console.WriteLine("Enter the Mark of the Question");
+                if((int.TryParse(Console.ReadLine(), out int mark) && mark > 0)){
+                    Mark=mark;
+                    break;
+                }
+                Console.WriteLine("Enter valid Question Mark");
+            }
         }
         public  override string ToString()
         {
-            return $"{Header}           {Mark}" +
-                   $"{Body}";
+            return $"{Header}\t\t{Mark} Marks\n{Body}\n";
         }
     }
 }

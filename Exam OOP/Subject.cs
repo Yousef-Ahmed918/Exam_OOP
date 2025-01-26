@@ -12,20 +12,28 @@ namespace Exam_OOP
     {
         int Type;
         //properities For the attrubutes
-        public int SubjectId { get; set; }
         public string SubjectName { get; set; }
+        public Exam Exam { get; set; }
+        public int SubjectId { get; set; }
         //parametirezed constructor
         public Subject(int id,string name)
         { 
             SubjectId = id;
             SubjectName = name;
         }
-        public Exam Exam { get; set; }
         //private function to get the type of the exam
         void TypeOfTheExam()
         {
-            Console.WriteLine("Enter The Type Of The Exam ((1) For Partial OR (2) For Final)");
-            int.TryParse(Console.ReadLine(), out Type);
+            while (true)
+            {
+                Console.WriteLine("Enter The Type Of The Exam ((1) For Partial OR (2) For Final)");
+                if((int.TryParse(Console.ReadLine(), out int type)) && type >= 1 && type <= 2)
+                {
+                    Type = type;
+                    break;
+                }
+                Console.WriteLine("Enter valid Choice For the Exam Type");
+            }
         }
         //function to Create an exam
         public void CreateExam()
@@ -36,23 +44,38 @@ namespace Exam_OOP
                 Exam = new PracticalExam();
                 Exam.TimeOfExam();
                 Exam.NumberOfQuestions();
-                
-                for (int i = 0; i < Exam.Number; i++)
+                Console.Clear();
+                Exam.CreateQuestion();
+                Console.Clear();
+                Console.WriteLine("Do you want to start the exam?(Y/N)");
+                char start;
+                char.TryParse(Console.ReadLine(), out start);
+                if (char.ToUpper(start) == 'Y')
                 {
-                    Exam.CreateQuestion();
+                    Exam.TakeExam();
+                    Exam.ShowQuestion();
                 }
-                
+                else
+                    return;
             }
             else
             {
-
                 Exam = new FinalExam();
                 Exam.TimeOfExam();
                 Exam.NumberOfQuestions();
-                for (int i = 0; i < Exam.Number; i++)
+                Console.Clear();
+                Exam.CreateQuestion();
+                Console.Clear();
+                Console.WriteLine("Do you want to start the exam?(Y/N)");
+                char start;
+                char.TryParse(Console.ReadLine(), out start);
+                if (char.ToUpper(start) == 'Y')
                 {
-                    Exam.CreateQuestion();
+                    Exam.TakeExam();
+                    Exam.ShowQuestion();
                 }
+                else
+                    return;
             }
         }
     }
